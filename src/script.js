@@ -217,7 +217,6 @@ document.getElementById('lightDark').addEventListener('click', lightDark);
 function lightDark() {
     lightMode = !lightMode
     if (lightMode === true) {
-        document.getElementById("kofi").style.color = "white";
         document.body.style.backgroundColor = 'black';
 
         backgroundColor = 'black'
@@ -226,7 +225,6 @@ function lightDark() {
         effect.domElement.style.color = ASCIIColor;
         effect.domElement.style.backgroundColor = backgroundColor;
     } else {
-        document.getElementById("kofi").style.color = "black";
         document.body.style.backgroundColor = 'white';
 
         backgroundColor = 'white'

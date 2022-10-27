@@ -35,10 +35,12 @@ form {
     }
 
 #kofi {
-    text-align: left;  
+    text-align: left;
+    font-family: 'Courier New';  
     position: fixed;
     left: 0;
     bottom: 0;
+    right: 0;
 }
 
 input[type="button"] {

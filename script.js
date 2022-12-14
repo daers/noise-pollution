@@ -1,18 +1,18 @@
-import './style.css'
+//import './style.css'
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js'
-import { AsciiEffect } from 'three/examples/jsm/effects/AsciiEffect.js';
-import html2canvas from 'html2canvas';
+import { OrbitControls } from 'OrbitControls'
+import { STLLoader } from 'STLLoader'
+import { AsciiEffect } from 'AsciiEffect';
+//import html2canvas from 'https://html2canvas.hertzen.com/dist/html2canvas.js';
 
 //LightMode
-let lightMode = true
+let lightMode = false
 
 //Create a clock for rotation
 const clock = new THREE.Clock()
 
 // Set rotate boolean variable
-let rotateModel = false
+let rotateModel = true
 
 //Ugh, don't ask about this stuff
 var userUploaded = false
@@ -58,8 +58,8 @@ let effect;
 
 let characters = ' .:-+*=%@#'
 const effectSize = { amount: .205 }
-let backgroundColor = 'black'
-let ASCIIColor = 'white'
+let backgroundColor = 'white'
+let ASCIIColor = 'black'
 
 function createEffect() {
     effect = new AsciiEffect(renderer, characters, { invert: true, resolution: effectSize.amount });
@@ -75,7 +75,7 @@ document.body.appendChild(effect.domElement)
 document.getElementById("ascii").style.whiteSpace = "prewrap"
 
 stlLoader.load(
-    './models/test2.stl',
+    './models/LOGO_NP.stl',
     function (geometry) {
 
         myMesh.material = material;
@@ -122,11 +122,11 @@ stlLoader.load(
 
         tick()
 
-        document.getElementById('file-selector').addEventListener('change', openFile, false);
+        //document.getElementById('file-selector').addEventListener('change', openFile, false);
 
 
-        function openFile(evt) {
-            const fileObject = evt.target.files[0];
+        function openFile() {
+            const fileObject = 'models/np06_decimate.stl';//evt.target.files[0];
 
             const reader = new FileReader();
             reader.readAsArrayBuffer(fileObject);
@@ -153,33 +153,40 @@ stlLoader.load(
                 scene.add(myMesh);
             };
         };
+
+        document.getElementById('inputBox').addEventListener('keyup', ({key}) => {
+            if (key === "Enter") {
+                console.log("HIT ENTER");
+                openFile();
+            }
+        });
     }
 )
 
 
-document.getElementById('screenshotButton').addEventListener('click', takeScreenshot);
+// document.getElementById('screenshotButton').addEventListener('click', takeScreenshot);
 
-function takeScreenshot() {
-    var container = document.body; // full page 
-    html2canvas(container).then(function (canvas) {
+// function takeScreenshot() {
+//     var container = document.body; // full page 
+//     html2canvas(container).then(function (canvas) {
 
-        var link = document.createElement("a");
-        document.body.appendChild(link);
-        link.download = "ASCII.jpg";
-        link.href = canvas.toDataURL("image/jpg");
-        console.log(link.href);
-        // link.target = '_blank';
-        link.click();
-    });
-}
+//         var link = document.createElement("a");
+//         document.body.appendChild(link);
+//         link.download = "ASCII.jpg";
+//         link.href = canvas.toDataURL("image/jpg");
+//         console.log(link.href);
+//         // link.target = '_blank';
+//         link.click();
+//     });
+// }
 
-document.getElementById('rotateButton').addEventListener('click', rotateMode);
+// document.getElementById('rotateButton').addEventListener('click', rotateMode);
 
 function rotateMode() {
     rotateModel = !rotateModel
 }
 
-document.getElementById('updateASCII').addEventListener('click', updateASCII);
+// document.getElementById('updateASCII').addEventListener('click', updateASCII);
 
 function updateASCII() {
 
@@ -196,7 +203,7 @@ function updateASCII() {
 
 }
 
-document.getElementById('resetASCII').addEventListener('click', resetASCII);
+// document.getElementById('resetASCII').addEventListener('click', resetASCII);
 
 function resetASCII() {
 
@@ -212,7 +219,7 @@ function resetASCII() {
     controls = new OrbitControls(camera, effect.domElement)
 }
 
-document.getElementById('lightDark').addEventListener('click', lightDark);
+// document.getElementById('lightDark').addEventListener('click', lightDark);
 
 function lightDark() {
     lightMode = !lightMode
@@ -245,32 +252,38 @@ function onWindowResize() {
     effect.setSize(window.innerWidth, window.innerHeight);
 }
 
-function download(filename, text) {
-    var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-    element.setAttribute('download', filename);
+// function download(filename, text) {
+//     var element = document.createElement('a');
+//     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+//     element.setAttribute('download', filename);
 
-    element.style.display = 'none';
-    document.body.appendChild(element);
+//     element.style.display = 'none';
+//     document.body.appendChild(element);
 
-    element.click();
+//     element.click();
 
-    document.body.removeChild(element);
-}
+//     document.body.removeChild(element);
+// }
 
-document.getElementById("copyASCII").addEventListener("click", function () {
-    var text = document.getElementsByTagName("table")[0].innerText
-    var filename = "ASCII.txt";
+// function processText(inputText) {
+//     if (inputText == 'npr1234') {
+        
+//     }
+// }
 
-    download(filename, text);
-}, false);
+// document.getElementById("copyASCII").addEventListener("click", function () {
+//     var text = document.getElementsByTagName("table")[0].innerText
+//     var filename = "ASCII.txt";
 
-document.getElementById("clipboardASCII").addEventListener("click", function () {
-    const textArea = document.createElement("textarea");
-    textArea.textContent = document.getElementsByTagName("td")[0].innerText;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textArea);
-    window.alert("ASCII copied to clipboard");
-}, false);
+//     download(filename, text);
+// }, false);
+
+// document.getElementById("clipboardASCII").addEventListener("click", function () {
+//     const textArea = document.createElement("textarea");
+//     textArea.textContent = document.getElementsByTagName("td")[0].innerText;
+//     document.body.appendChild(textArea);
+//     textArea.select();
+//     document.execCommand('copy');
+//     document.body.removeChild(textArea);
+//     window.alert("ASCII copied to clipboard");
+// }, false);
